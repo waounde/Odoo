@@ -11,7 +11,7 @@ RUN mkdir -p /mnt/extra-addons/custom-addons && chmod -R o+rX /mnt/extra-addons/
 ADD costum_addons/ /mnt/extra-addons/custom-addons/
 
 # Nous copions nos configuration systeme dans l'image afin qu'il soit prise en compte au lancement d'Odoo
-COPY config/odoo.conf /etc/odoo/
+COPY odoo.conf /etc/odoo/
 
 # Nous nous mettons odoo
 USER odoo
