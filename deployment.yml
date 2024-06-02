@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: odoo
-        image: yourdockerhubusername/odoo:latest
+        image: waounde221/odoo:latest
         ports:
         - containerPort: 8069
         volumeMounts:
