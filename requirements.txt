@@ -1,0 +1,4 @@
+# Add your Python dependencies here
+pandas
+requests
+# Add any other dependencies required by your custom addons
