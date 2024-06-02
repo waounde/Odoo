@@ -12,7 +12,7 @@ services:
       - odoo-db-data:/var/lib/postgresql/data
 
   web:
-    image: yourdockerhubusername/odoo:latest
+    image: waounde221/odoo:latest
     depends_on:
       - db
     ports:
