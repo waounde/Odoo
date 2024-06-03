@@ -4,7 +4,7 @@ version: '3'
 # Configuration de nos services odoo et postgres 
 services:
   odoo: # Configuration de notre service Odoo
-    image: eazy-odoo:1.0.0 # Nom de notre image personnalisée
+    image: goumal-odoo:1.0.0 # Nom de notre image personnalisée
     build: # Nous construisons notre image à partir de notre Dockerfile 
       dockerfile: ./Dockerfile
       context: .
@@ -14,7 +14,7 @@ services:
     ports:
       - "8069:8069" # Le port 8069 est exposé pour accéder à l'application Odoo 
     networks:
-      - eazycnet # Définition du réseau dans lequel notre service communiquera
+      - goumalcnet # Définition du réseau dans lequel notre service communiquera
     volumes:
       - data:/var/lib/odoo # Définition d'un volume pour persister nos logs lors de l'exécution de l'application Odoo 
   postgres: # Configuration de notre service PostgreSQL
@@ -23,11 +23,11 @@ services:
     ports:
       - "5432:5432" # Le port 5432 est exposé pour accéder à notre base de données
     networks:
-      - eazycnet # Définition du reseau dans lequel notre service communiquera
+      - goumalcnet # Définition du reseau dans lequel notre service communiquera
     volumes:
       - db:/var/lib/postgresql/data # Définition d'un volume pour persister nos données sauvegardées
 volumes: # Création de nos volumes
   data:
   db:
 networks: # Création du réseau
-  eazycnet:
+  goumalcnet:
