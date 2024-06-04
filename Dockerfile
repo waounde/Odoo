@@ -1,14 +1,42 @@
-FROM odoo:14.0
+# Utiliser l'image officielle de Python 3.8
+FROM python:3.8
 
-# Install additional dependencies if necessary
-RUN pip install --no-cache-dir -r /etc/odoo/requirements.txt
+# Définir les variables d'environnement
+ENV ODOO_VERSION 14.0
+ENV ODOO_RELEASE 20210927
 
-# Copy custom addons
-COPY ./addons /mnt/extra-addons
+# Mettre à jour le système et installer les dépendances d'Odoo
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        postgresql \
+        node-less \
+        npm \
+        && rm -rf /var/lib/apt/lists/*
 
-# Set permissions
-RUN chown -R odoo: /mnt/extra-addons
+# Installer les dépendances Python pour Odoo
+RUN pip install --no-cache-dir \
+        setuptools \
+        wheel \
+        && pip install --no-cache-dir \
+        cryptography \
+        num2words \
+        psycopg2-binary \
+        babel \
+        lxml \
+        vobject \
+        watchdog \
+        requests \
+        pyopenssl \
+        && pip install --no-cache-dir \
+        git+https://github.com/odoo/odoo.git@${ODOO_RELEASE}#egg=odoo
 
-USER odoo
+# Créer le répertoire pour les fichiers Odoo
+RUN mkdir -p /opt/odoo
 
-CMD ["odoo"]
+# Définir le répertoire de travail
+WORKDIR /opt/odoo
+
+# Exposer le port 8069 utilisé par Odoo
+EXPOSE 8069
+
+# Démarrer Odoo
+CMD ["odoo", "--addons-path=/usr/lib/python3/dist-packages/odoo/addons,/opt/odoo/addons"]
