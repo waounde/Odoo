@@ -7,6 +7,7 @@ ENV ODOO_VERSION 14.0
 # Mettre à jour le système et installer les dépendances d'Odoo
 RUN apt-get update && apt-get install -y --no-install-recommends \
         postgresql \
+        postgresql-client \
         node-less \
         npm \
         && rm -rf /var/lib/apt/lists/*
