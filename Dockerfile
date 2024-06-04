@@ -3,12 +3,10 @@ FROM python:3.8
 
 # Définir les variables d'environnement
 ENV ODOO_VERSION 14.0
-ENV ODOO_RELEASE 20210927
 
-# Mettre à jour le système et installer les dépendances d'Odoo et PostgreSQL
+# Mettre à jour le système et installer les dépendances d'Odoo
 RUN apt-get update && apt-get install -y --no-install-recommends \
         postgresql \
-        postgresql-client \
         node-less \
         npm \
         && rm -rf /var/lib/apt/lists/*
@@ -28,7 +26,7 @@ RUN pip install --no-cache-dir \
         requests \
         pyopenssl \
         && pip install --no-cache-dir \
-        git+https://github.com/odoo/odoo.git@${ODOO_RELEASE}#egg=odoo
+        git+https://github.com/odoo/odoo.git@$ODOO_VERSION#egg=odoo
 
 # Créer le répertoire pour les fichiers Odoo
 RUN mkdir -p /opt/odoo
