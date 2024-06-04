@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: odoo
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: odoo
@@ -14,24 +14,26 @@ spec:
     spec:
       containers:
       - name: odoo
-        image: waounde221/odoo:latest
+        image: yourdockerhubaccount/odoo:latest
         ports:
         - containerPort: 8069
-        volumeMounts:
-        - name: odoo-data
-          mountPath: /var/lib/odoo
-      volumes:
-      - name: odoo-data
-        persistentVolumeClaim:
-          claimName: odoo-pvc
+        env:
+        - name: HOST
+          value: "db"
+        - name: USER
+          value: "odoo"
+        - name: PASSWORD
+          value: "odoo"
+      restartPolicy: Always
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Service
 metadata:
-  name: odoo-pvc
+  name: odoo
 spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
+  selector:
+    app: odoo
+  ports:
+    - protocol: TCP
+      port: 8069
+      targetPort: 8069
