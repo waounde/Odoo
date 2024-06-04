@@ -6,7 +6,6 @@ ENV ODOO_VERSION 14.0
 
 # Mettre à jour le système et installer les dépendances d'Odoo
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        postgresql \
         postgresql-client \
         node-less \
         npm \
@@ -34,8 +33,11 @@ RUN mkdir -p /opt/odoo
 # Définir le répertoire de travail
 WORKDIR /opt/odoo
 
+# Copier les fichiers de configuration Odoo
+COPY ./odoo.conf /etc/odoo/odoo.conf
+
 # Exposer le port 8069 utilisé par Odoo
 EXPOSE 8069
 
 # Démarrer Odoo
-CMD ["odoo", "--addons-path=/usr/lib/python3/dist-packages/odoo/addons,/opt/odoo/addons"]
+CMD ["odoo", "-c", "/etc/odoo/odoo.conf"]
