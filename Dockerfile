@@ -10,24 +10,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         postgresql-client \
         node-less \
         npm \
-        && rm -rf /var/lib/apt/lists/*
-
-# Installer les dépendances Python pour Odoo
-RUN pip install --no-cache-dir \
-        setuptools \
-        wheel \
+        && rm -rf /var/lib/apt/lists/* \
         && pip install --no-cache-dir \
-        cryptography \
-        num2words \
-        psycopg2-binary \
-        babel \
-        lxml \
-        vobject \
-        watchdog \
-        requests \
-        pyopenssl \
+            setuptools \
+            wheel \
+            lxml[html_clean] \
         && pip install --no-cache-dir \
-        git+https://github.com/odoo/odoo.git@$ODOO_VERSION#egg=odoo
+            cryptography \
+            num2words \
+            psycopg2-binary \
+            babel \
+            lxml \
+            vobject \
+            watchdog \
+            requests \
+            pyopenssl \
+        && pip install --no-cache-dir \
+            git+https://github.com/odoo/odoo.git@$ODOO_VERSION#egg=odoo
 
 # Créer le répertoire pour les fichiers Odoo
 RUN mkdir -p /opt/odoo
