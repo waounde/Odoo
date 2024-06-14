@@ -1,7 +1,7 @@
 version: '3'
 services:
   odoo:
-    image: odoo_custom:1.0.0
+    image: odoo:latest
     build:
       context: .
     env_file: .env
