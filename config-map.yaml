@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: odoo-config
+data:
+  HOST: postgres
+  USER: odoo
+  PASSWORD: QAtM4jiGkNKGYbCEMIuAQ25TcOSwcGFeF5B
+  PORT: "5432"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: odoo
+  POSTGRES_PASSWORD: QAtM4jiGkNKGYbCEMIuAQ25TcOSwcGFeF5B
