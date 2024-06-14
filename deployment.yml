@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: odoo
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: odoo
@@ -14,26 +14,9 @@ spec:
     spec:
       containers:
       - name: odoo
-        image: oddo
+        image: odoo_custom:1.0.0
         ports:
         - containerPort: 8069
-        env:
-        - name: HOST
-          value: "db"
-        - name: USER
-          value: "odoo"
-        - name: PASSWORD
-          value: "odoo"
-      restartPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: odoo
-spec:
-  selector:
-    app: odoo
-  ports:
-    - protocol: TCP
-      port: 8069
-      targetPort: 8069
+        envFrom:
+        - configMapRef:
+            name: odoo-config
